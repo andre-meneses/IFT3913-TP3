@@ -1,4 +1,4 @@
-class,TLOC, WMC, TASSERT
+class,TLOC,WMC,TASSERT
 ./src/test/java/org/jfree/chart/annotations/CategoryLineAnnotationTest.java,107,8,27
 ./src/test/java/org/jfree/chart/annotations/CategoryPointerAnnotationTest.java,96,8,30
 ./src/test/java/org/jfree/chart/annotations/CategoryTextAnnotationTest.java,61,8,14
