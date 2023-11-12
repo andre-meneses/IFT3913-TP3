@@ -51,7 +51,7 @@ def save_statistics(stats, file_name):
     stats_df.to_csv(file_name, index=False)
 
 def main():
-    file_path = 'jfreechart-test-stats.csv'  
+    file_path = 'data/jfreechart-test-stats.csv'  
     data = load_data(file_path)
 
     stats = {}
@@ -62,7 +62,7 @@ def main():
     plot_scatterplot(data, 'TLOC', 'TASSERT')
     plot_scatterplot(data, 'WMC', 'TASSERT')
 
-    save_statistics(stats, 'statistiques_metriques.csv')
+    save_statistics(stats, 'output/statistiques_metriques.csv')
     print("Boîtes à moustaches créées et statistiques sauvegardées.")
 
 if __name__ == "__main__":
