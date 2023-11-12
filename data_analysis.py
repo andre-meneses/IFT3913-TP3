@@ -32,6 +32,16 @@ def plot_boxplot(data, column_name):
     plt.savefig(f'figures/{column_name}_boite_a_moustaches.pdf', dpi=300)  # Sauvegarde en haute qualité
     plt.show()
 
+def plot_scatterplot(data, column1, column2):
+    sns.set_theme(style="whitegrid")
+    plt.figure(figsize=(10, 6))
+    sns.scatterplot(data=data, x=column1, y=column2, palette="Set2")
+    plt.title(f'Nuage de points entre {column1} et {column2}', fontsize=14)
+    plt.xlabel(column1, fontsize=12)
+    plt.ylabel(column2, fontsize=12)
+    plt.savefig(f'figures/{column1}_vs_{column2}_nuage_de_points.pdf', dpi=300)
+    plt.show()
+
 def save_statistics(stats, file_name):
     stats_df = pd.DataFrame()
     for metric, values in stats.items():
@@ -46,12 +56,16 @@ def main():
 
     stats = {}
     for column in data.columns:
-        plot_boxplot(data, column)
+        # plot_boxplot(data, column)
         stats[column] = calculate_stats(data[column])
+
+    plot_scatterplot(data, 'TLOC', 'TASSERT')
+    plot_scatterplot(data, 'WMC', 'TASSERT')
 
     save_statistics(stats, 'statistiques_metriques.csv')
     print("Boîtes à moustaches créées et statistiques sauvegardées.")
 
 if __name__ == "__main__":
     main()
+
 
