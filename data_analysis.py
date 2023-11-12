@@ -16,7 +16,7 @@ def calculate_stats(column):
         'Médiane': quartiles[0.5],
         'Quartile Inférieur': quartiles[0.25],
         'Quartile Supérieur': quartiles[0.75],
-        'Distance': quartiles[0.75] - quartiles[0.25],
+        'Longueur': quartiles[0.75] - quartiles[0.25],
         'Limite Supérieure': quartiles[0.75] + 1.5 * (quartiles[0.75] - quartiles[0.25]),
         'Limite Inférieure': max(quartiles[0.25] - 1.5 * (quartiles[0.75] - quartiles[0.25]), min_value),
         'Points extrêmes': ', '.join(map(str, outliers.values))
