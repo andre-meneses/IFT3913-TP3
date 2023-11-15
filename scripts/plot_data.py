@@ -22,25 +22,12 @@ def calculate_stats(column):
         'Points extrêmes': ', '.join(map(str, outliers.values))
     }
 
-def plot_boxplot(data, column_name):
-    sns.set_theme(style="whitegrid")  # Choix du thème Seaborn
-    plt.figure(figsize=(10, 6))  # Ajustement de la taille du graphique
-    sns.boxplot(x=data[column_name], palette="Set2")  # Utilisation d'une palette de couleurs
-    plt.title(f'Boîte à moustaches de {column_name}', fontsize=14)
-    plt.xlabel('Valeurs', fontsize=12)
-    plt.ylabel('Distribution', fontsize=12)
-    plt.savefig(f'figures/{column_name}_boite_a_moustaches.pdf', dpi=300)  # Sauvegarde en haute qualité
-    plt.show()
-
-def plot_scatterplot(data, column1, column2):
-    sns.set_theme(style="whitegrid")
-    plt.figure(figsize=(10, 6))
-    sns.scatterplot(data=data, x=column1, y=column2, palette="Set2")
-    plt.title(f'Nuage de points entre {column1} et {column2}', fontsize=14)
-    plt.xlabel(column1, fontsize=12)
-    plt.ylabel(column2, fontsize=12)
-    plt.savefig(f'figures/{column1}_vs_{column2}_nuage_de_points.pdf', dpi=300)
-    plt.show()
+def plot_scatterplot(data, column1, column2, ax):
+    sns.scatterplot(data=data, x=column1, y=column2, color="darkblue", s=50, alpha=0.7, ax=ax)  # Dark color, larger size, and some transparency
+    ax.set_facecolor("lightgray")  # Light gray background for contrast
+    ax.set_title(f'Nuage de points entre {column1} et {column2}', fontsize=14)
+    ax.set_xlabel(column1, fontsize=12)
+    ax.set_ylabel(column2, fontsize=12)
 
 def save_statistics(stats, file_name):
     stats_df = pd.DataFrame()
@@ -50,22 +37,43 @@ def save_statistics(stats, file_name):
         stats_df = pd.concat([stats_df, temp_df], ignore_index=True)
     stats_df.to_csv(file_name, index=False)
 
+
+def plot_boxplot(data, column_name, ax):
+    sns.boxplot(x=data[column_name], palette="Set2", ax=ax)  # Draw on the passed axes
+    ax.set_title(f'Boîte à moustaches de {column_name}', fontsize=14)
+    ax.set_xlabel('Valeurs', fontsize=12)
+    ax.set_ylabel('Distribution', fontsize=12)
+
 def main():
     file_path = 'data/jfreechart-test-stats.csv'
     data = load_data(file_path)
 
     stats = {}
-    for column in data.columns:
-        # plot_boxplot(data, column)
+    columns = data.columns
+    fig, axs = plt.subplots(3, 1, figsize=(15, 10))  # Create a 2x2 grid of subplots
+    axs = axs.flatten()  # Flatten the 2D array of axes
+
+    for i, column in enumerate(columns):
+        plot_boxplot(data, column, axs[i])
         stats[column] = calculate_stats(data[column])
 
-    plot_scatterplot(data, 'TLOC', 'TASSERT')
-    plot_scatterplot(data, 'WMC', 'TASSERT')
+    # Adjust layout and save the figure
+    plt.tight_layout()
+    plt.savefig('figures/all_boxplots.pdf', dpi=300)
+    plt.show()
+
+    fig, axs = plt.subplots(1, 2, figsize=(20, 10))  # 1 row, 2 columns
+
+    plot_scatterplot(data, 'TLOC', 'TASSERT', axs[0])
+    plot_scatterplot(data, 'WMC', 'TASSERT', axs[1])
+
+    plt.tight_layout()
+    plt.savefig('figures/scatterplots_grid.pdf', dpi=300)
+    plt.show()
 
     save_statistics(stats, 'output/statistiques_metriques.csv')
     print("Boîtes à moustaches créées et statistiques sauvegardées.")
 
 if __name__ == "__main__":
     main()
-
 
