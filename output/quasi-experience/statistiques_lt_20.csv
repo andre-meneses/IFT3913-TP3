@@ -1,0 +1,3 @@
+Métrique,Médiane,Quartile Inférieur,Quartile Supérieur,Longueur,Limite Supérieure,Limite Inférieure,Points extrêmes
+WMC,8.0,8.0,10.0,2.0,13.0,7,"20, 19, 17, 17, 15"
+TLOC,54.5,36.0,77.75,41.75,140.375,3,"175, 161, 163, 161, 157"
