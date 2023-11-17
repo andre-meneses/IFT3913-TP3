@@ -18,3 +18,5 @@ python3 scripts/plot_data.py
 python3 scripts/stats.py
 ```
 Il est important d'exécuter ces scripts depuis la racine du projet et non depuis le dossier 'scripts/', afin de conserver la validité des chemins relatifs définis dans les scripts.
+
+Lien repo: https://github.com/andre-meneses/IFT3913-TP3
